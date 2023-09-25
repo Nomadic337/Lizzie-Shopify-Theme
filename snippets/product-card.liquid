@@ -2,7 +2,7 @@
     <div class="border bg-white shadow-lg rounded-lg overflow-hidden">
         <a href="{{ product_product.url }}">
             {% if product_product.featured_image %}
-                <div class="h-60 overflow-hidden">
+                <div class="h-40 overflow-hidden">
                     <img
                         class="w-full h-full object-cover transition duration-1000 ease-in hover:scale-105 transform rendering-pixelated"
                         src="{{ product_product.featured_image | image_url: width: 270 }}"
