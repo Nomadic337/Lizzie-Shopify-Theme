@@ -1,33 +1,48 @@
-<div class="px-4 py-8">
-    {% paginate collection.products by 6 %}
-        <h1 class="text-3xl text-center">{{ collection.title }}</h1>
+<div class="flex flex-col items-center my-8">
+    <h1 class="text-center text-3xl">{{ section.settings.title }}</h1>
 
-        <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {% for product in collection.products %}
-
-                    {% render 'product-card', product_product: product %}
-                    
-                {% else %}
-                    <p>There are no products inside of this collection</p>
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {% for product in section.settings.featured_collection.products limit: section.settings.number_of_products_to_show %}
+                {% render 'product-card', product_product: product %}
+            {% else %}
+                {% for item in (1..4) %}
+                    {% render 'product-card-placeholder' %}
                 {% endfor %}
-            </div>
+            {% endfor %}
         </div>
-        
-
-        {% render 'pagination', pagination: paginate %}
-    {% endpaginate %}
+    </div>
 </div>
+
+
 
 {% schema %}
 {
-    "name": "Template Collection",
+    "name": "Featured Collection",
     "settings": [
         {
-            "type": "number",
-            "id": "number_of_products_per_page",
-            "default": 6,
-            "label": "Number of products per page:"
+            "type": "text",
+            "id": "title",
+            "default": "Featured Collection",
+            "label": "Title"
+        },
+        {
+            "type": "collection",
+            "id": "featured_collection",
+            "label": "Collection"
+        },
+        {
+            "type": "range",
+            "id": "number_of_products_to_show",
+            "min": 4,
+            "max": 12,
+            "default": 4,
+            "label": "Number of products to show"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Featured Collection"
         }
     ]
 }
